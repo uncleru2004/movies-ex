@@ -1,3 +1,17 @@
+:root {
+  --body-color: #ffffff; /* общий фон */
+
+  --title-color: #17183b; /* цвет заголовков */
+  --subtitle-color: #383c42; /* цвет подзаголовков */
+
+  --nav-link-color: #9dcdf0; /* цвет ссылок в навигации */
+
+  --accent-color: #e9eaf0; /* основной цвет тем */
+
+  --bg-hover: #f7f7f7;
+  --border-color: #d1d1d8; /* основной цвет рамок */
+}
+
 body {
   margin: 0;
 }
@@ -12,6 +26,7 @@ main {
 
 .container {
   position: relative;
+  min-height: 78vh;
 }
 
 a {
@@ -40,15 +55,37 @@ button:active {
   transform: scale(1);
 }
 
-input {
+input[type="text"] {
   box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.2);
-  margin: 10px;
+  margin: 20px;
   height: 40px;
   font-size: 28px;
   width: 400px;
   border-radius: 12px;
   border: 1px solid #c3c7ca;
+  background-color: #c3c7ca;
   color: #34444f;
+}
+
+input[type="text"]:hover {
+  background-color: white;
+}
+
+input[type="submit"] {
+  background-color: rgba(32, 40, 62, 0.6);
+  border: 0;
+  border-radius: 12px;
+  color: #7e878f;
+  font-size: 16px;
+  padding: 12px 24px;
+  outline: none;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+input[type="submit"]:hover {
+  background-color: rgba(65, 82, 124, 0.6);
+  color: #b9c6d1;
 }
 
 input:focus {
@@ -59,6 +96,7 @@ input:focus {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+  padding: 20px;
 }
 
 .flex {
@@ -66,17 +104,15 @@ input:focus {
   justify-content: space-around;
 }
 
-
 /* Header */
 
 header {
   font-size: 24px;
   position: fixed;
   z-index: 2;
-  left: 0;  
+  left: 0;
   width: 100%;
   background: #121829;
-  color: #a8aebf;
   padding: 20px 0;
   border-bottom: 1px solid #a8aebf;
 }
@@ -85,18 +121,59 @@ header {
   min-width: 376px;
 }
 
-.header-nav__link {
-  
-  display: inline-flex;
-  align-items: center;
+.nav-link a {
+  color: var(--nav-link-color);
+  font-weight: 600;
+  font-size: 26px;
+  padding: 10px 0;
+  line-height: 24px;
+  border: 0;
+  margin: 0;
+  background-color: transparent;
+  position: relative;
+  opacity: 1;
+}
+
+/* полоска снизу для навигации */
+.nav-link a::after,
+.nav-link.active a::after {
+  content: "";
+  height: 2px;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background-color: var(--nav-link-color);
+  inset-inline: 0;
+  transform: scaleX(0);
+  transition: transform 0.2s ease;
+  opacity: 1;
+}
+
+/* анимация линии при наведении на неактивную ссылку */
+.nav-link a:hover::after {
+  transform: scaleX(1);
+  opacity: 0.65;
+}
+
+.nav-link a:hover {
+  opacity: 0.65;
+}
+
+/* анимация линии при наведении на активную ссылку */
+.nav-link.active a::after {
+  background-color: var(--accent-color);
+  transform: scaleX(1);
+}
+
+.nav-link.active a {
+  color: var(--accent-color);
 }
 
 /* Footer */
 
 footer {
   font-size: 24px;
-  position: fixed;
-  z-index: 2;
+
   left: 0;
   bottom: 0;
   width: 100%;
@@ -105,9 +182,6 @@ footer {
   border-top: 1px solid #a8aebf;
   color: #a8aebf;
 }
-
-
-
 
 /*Movie Details css */
 
@@ -126,7 +200,7 @@ footer {
 }
 
 .description-container {
-  margin-top: 80px;
+  margin-top: 10px;
 }
 
 .details-list-item-rating {
@@ -158,28 +232,20 @@ footer {
 
 .movie-details-container {
   position: absolute;
-  top: -170;
-  left: 50;
-  padding: 40px;
+  top: -20px;
+  left: 40px;
+  padding: 10px 20px;
   width: 280px;
   background: rgba(32, 40, 62, 0.6);
-  backdrop-filter: blur(12px);
-  border-radius: 24px;
+  backdrop-filter: blur(1px);
+  border-radius: 12px;
 }
 
 .movie-details-title {
   font-weight: 600;
   font-size: 32px;
-  line-height: 40px;
-  display: flex;
-  align-items: center;
   letter-spacing: -0.02em;
   color: #ebeef5;
-}
-.movie-details-container span {
-  font-size: 14px;
-  font-weight: 400;
-  color: #8e95a9;
 }
 
 .description-container {

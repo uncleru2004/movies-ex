@@ -4,11 +4,13 @@ import "../styles/global.css";
 export default function App({ Component, pageProps }) {
   return (
     <>
-      <header><Nav /></header>
+      <header>
+        <Nav />
+      </header>
       <main>
         <Component {...pageProps} />
       </main>
-      <hr />
+
       <footer>(c) 2023</footer>
     </>
   );

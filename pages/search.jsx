@@ -1,33 +1,44 @@
 import { useState, useCallback } from "react";
 import MovieDetails from "../components/MovieDetails";
 import ItemsFetcher from "../components/ItemsFetcher";
-//import {detailsFetcher} from "../components/fetcher";
+import { movieFetcher } from "../components/fetcher";
 
 export default function Search() {
-    const [value, setValue] = useState(""),
+  const [value, setValue] = useState(""),
+    [inputValue, setInputValue] = useState(""),
     [list, setList] = useState([]);
-    //console.log(list)
+  //console.log(list)
 
   return (
     <div className="container">
-      <input
-        value={value}
-        placeholder="Введите название фильма..."
-        onInput={(event) => setValue(event.target.value)}
-      />
-
-      <button
-        onClick={() => {
-          setValue("");
-          console.log(list);
+      <form
+        onSubmit={(event) => {
+          event.preventDefault();
+          setValue(event.target[0].value);
+          setInputValue("");
+          //console.log(event);
         }}
       >
-        Поиск
-      </button>
+        <input
+          type="text"
+          value={inputValue}
+          placeholder="Введите название фильма..."
+          onInput={(event) => setInputValue(event.target.value)}
+        />
 
-      {value && <ItemsFetcher value={value} /*fetcher={detailsFetcher}*/ param={"&t="} onLoadCallback={setList}>
-        <MovieDetails movie={list} />
-      </ItemsFetcher>}
+        <input type="submit" value="Поиск" />
+      </form>
+
+      {value && (
+        <ItemsFetcher
+          value={value}
+          fetcher={movieFetcher}
+          param={"&t="}
+          onLoadCallback={setList}
+        >
+          <MovieDetails movie={list} />
+        </ItemsFetcher>
+      )}
     </div>
   );
 }

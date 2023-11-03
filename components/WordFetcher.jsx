@@ -1,11 +1,10 @@
 import { memo, useEffect, useState } from "react";
 //import { fetcher } from "./fetcher";
 
-export default memo(function ItemsFetcher({
-  value,
-  param,
+export default memo(function WordFetcher({
   fetcher,
   onLoadCallback,
+  onLoadCallbackVal,
   children,
 }) {
   const [data, setData] = useState(null),
@@ -14,23 +13,23 @@ export default memo(function ItemsFetcher({
   useEffect(() => {
     async function fetchItems() {
       try {
-        const t = await fetcher(value, param);
+        const t = await fetcher();
         setData(t);
-        onLoadCallback(t);
+        onLoadCallback(t[0].word);
+        onLoadCallbackVal(t[0].word);
         setError(null);
       } catch (error) {
         setError(error);
       }
     }
     fetchItems();
-  }, [onLoadCallback, value, param]);
+  }, [onLoadCallback]);
 
   if (error) return <Error error={error} />;
   if (data?.Response === "False")
     return <p style={{ color: "red" }}>Error: {data.Error}</p>;
   if (data) return <>{children}</>;
-  if (typeof data === "undefined") return <p>Movie Not Found!</p>;
-
+  //console.log(data)
   return <Spinner />;
 });
 

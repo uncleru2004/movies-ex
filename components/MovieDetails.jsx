@@ -1,12 +1,14 @@
-export default function MovieDetails({ movie }) {
+import { memo } from "react";
+
+export default memo(function MovieDetails({ movie }) {
   if (movie.Response === "True") {
-    console.log(movie);
+    //console.log(movie);
 
     return (
       <>
         <div className="details">
           <div className="movie-details-container">
-            <h3 className="movie-details-title">{movie.Title}</h3>
+            <span className="movie-details-title">{movie.Title}</span>
           </div>
 
           <div className="description-container">
@@ -17,10 +19,7 @@ export default function MovieDetails({ movie }) {
             <div className="text-details">
               <p className="film-overview">{movie.Plot}</p>
 
-              <h4 className="details-list-item-rating">
-                <i className="fa-regular fa-star"></i>
-                {movie.imdbRating}
-              </h4>
+              <div className="details-list-item-rating">{movie.imdbRating}</div>
 
               <table className="film_data_table">
                 <tbody>
@@ -38,7 +37,7 @@ export default function MovieDetails({ movie }) {
                   <tr>
                     <td>
                       <p>Director</p>
-                      <p>{movie.Director} min</p>
+                      <p>{movie.Director}</p>
                     </td>
                     <td>
                       <p>Actors</p>
@@ -61,7 +60,7 @@ export default function MovieDetails({ movie }) {
                     <td>
                       <p>Awards</p>
                       <p>{movie.Awards}</p>
-                    </td>   
+                    </td>
                     <td>
                       <p>BoxOffice</p>
                       <p>{movie.BoxOffice}</p>
@@ -71,17 +70,16 @@ export default function MovieDetails({ movie }) {
               </table>
             </div>
           </div>
-          
         </div>
 
         <div className="details_backgr_image">
-            <img
-              className="details_backgr_image_img"
-              src={movie.Poster}
-              alt={movie.Title}
-            />
-          </div>
+          <img
+            className="details_backgr_image_img"
+            src={movie.Poster}
+            alt={movie.Title}
+          />
+        </div>
       </>
     );
   }
-}
+});

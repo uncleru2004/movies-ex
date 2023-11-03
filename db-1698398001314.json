@@ -1,0 +1,11 @@
+{
+  "movies": [
+    {
+      "Poster": "https://m.media-amazon.com/images/M/MV5BZmRjODgyMzEtMzIxYS00OWY2LTk4YjUtMGMzZjMzMTZiN2Q0XkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_SX300.jpg",
+      "Title": "Red Notice",
+      "Type": "movie",
+      "Year": "2021",
+      "imdbID": "tt7991608"
+    }
+  ]
+}

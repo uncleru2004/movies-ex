@@ -1,33 +1,40 @@
-import { useState, useCallback } from "react";
-import ItemsFetcher from "../components/ItemsFetcher";
-//import {detailsFetcher} from "../components/fetcher";
+import { memo } from "react";
+import { selectedFetcher } from "../components/fetcher";
 import Cards from "../components/Cards";
+import useSWR from "swr";
 
-export default function Selected() {
-    const [value, setValue] = useState(""),
-    [list, setList] = useState([]);
-    //console.log(list)
+export default memo(function Selected() {
+  const { data, error, isLoading, isValidating, mutate } = useSWR(
+    "https://localhost:3333/movies",
+    selectedFetcher
+  );
+  //console.log(data);
+
+  async function onClick(event) {
+    let optimisticData;
+
+    if (event.target.id === "delete") {
+      const movieID = event.target.closest("div").id;
+
+      const promise = (() => {
+        optimisticData = data.filter((item) => item.id != movieID);
+        return fetch("http://localhost:3333/movies/" + +movieID, {
+          method: "DELETE",
+        });
+      })();
+
+      if (promise)
+        await mutate(promise.then(selectedFetcher), {
+          optimisticData,
+          populateCache: true,
+          revalidate: false,
+        });
+    }
+  }
 
   return (
-    <div>
-      <input
-        value={value}
-        placeholder="Введите название..."
-        onInput={(event) => setValue(event.target.value)}
-      />
-
-      <button
-        onClick={() => {
-          setValue("");
-          console.log(list);
-        }}
-      >
-        Поиск
-      </button>
-
-      {list && <ItemsFetcher value={value} /*fetcher={detailsFetcher}*/ param={"&t="} onLoadCallback={setList}>
-        <Cards movie={list} />
-      </ItemsFetcher>}
+    <div className="container" onClick={() => onClick(event)}>
+      {data && <Cards movies={data} selected={true} />}
     </div>
   );
-}
+});
