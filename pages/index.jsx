@@ -23,6 +23,7 @@ export default memo(function Home() {
   //console.log(word);
 
   async function onClick(event) {
+    event.preventDefault();
     let optimisticData;
 
     if (event.target.id === "selected") {

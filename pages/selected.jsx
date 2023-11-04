@@ -11,6 +11,7 @@ export default memo(function Selected() {
   //console.log(data);
 
   async function onClick(event) {
+    event.preventDefault();
     let optimisticData;
 
     if (event.target.id === "delete") {
